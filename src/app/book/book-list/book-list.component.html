@@ -1,0 +1,8 @@
+<div class="book-list">
+  <ng-container *ngFor="let book of books$ | async; let first = first; let count = count">
+    <small *ngIf="first" class="text-meta">
+      Showing {{ count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
+    </small>
+    <ws-book-card [book]="book"></ws-book-card>
+  </ng-container>
+</div>

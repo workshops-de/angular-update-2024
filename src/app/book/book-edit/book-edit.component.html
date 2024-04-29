@@ -1,0 +1,11 @@
+<h2 class="mat-h2">Edit</h2>
+<form #form="ngForm" class="book-edit-screen" (ngSubmit)="save()">
+  <label for="title">Title</label
+  ><input required minlength="1" [(ngModel)]="book.title" type="text" id="title" name="title" />
+  <label for="subtitle">Subtitle</label
+  ><input required [(ngModel)]="book.subtitle" type="text" id="subtitle" name="subtitle" />
+  <label for="abstract">Abstract</label
+  ><textarea [(ngModel)]="book.abstract" required type="text" id="abstract" name="abstract" rows="15"></textarea>
+
+  <button [disabled]="!form.valid" type="submit" class="m-top"><span>💾</span>Save</button>
+</form>

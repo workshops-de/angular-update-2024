@@ -1,0 +1,10 @@
+<div class="book-list-item">
+  <a [routerLink]="[book.isbn]"
+    ><h2>{{ book.title }}</h2>
+  </a>
+  <h3>{{ book.subtitle }}</h3>
+  <div class="text-meta">by {{ book.author }}</div>
+  <div class="hideable">
+    <button class="tertiary" style="color: steelblue">+ show details</button>
+  </div>
+</div>

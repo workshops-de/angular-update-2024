@@ -1,0 +1,14 @@
+<div class="book-detail-screen" *ngIf="book$ | async as book">
+  <a href="/books"><span>⬅️ </span>Back to books</a><img [src]="book.cover" [alt]="book.title" />
+  <h2>{{ book.title }}</h2>
+  <h3>{{ book.subtitle }}</h3>
+  <div class="text-meta">by {{ book.author }}</div>
+  <small>{{ book.isbn }} | {{ book.numPages }} pages</small>
+  <h2 class="m-top m-bottom">{{ book.price }}</h2>
+  <p class="m-top">
+    {{ book.abstract }}
+  </p>
+  <a class="m-top" [routerLink]="['edit']">
+    <button><span>✏️</span>Edit</button>
+  </a>
+</div>
