@@ -8,14 +8,15 @@ import { BookNa } from '../models';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'ws-book-new',
-    templateUrl: './book-new.component.html',
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgIf]
+  selector: 'ws-book-new',
+  templateUrl: './book-new.component.html',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, NgIf]
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
   form: FormGroup;
+  saved = false;
 
   constructor(private router: Router, private fb: FormBuilder, private bookService: BookApiService) {
     this.form = this.buildForm();
@@ -30,8 +31,10 @@ export class BookNewComponent implements OnDestroy {
     this.sink.add(
       this.bookService
         .create(book)
-        .pipe(tap(() => this.router.navigateByUrl('/')))
-        .subscribe()
+        .pipe(tap(() => (this.saved = true)))
+        .subscribe({
+          complete: () => this.router.navigateByUrl('/')
+        })
     );
   }
 
