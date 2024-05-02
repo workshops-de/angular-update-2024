@@ -18,7 +18,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sink.add(
       this.route.params
-        .pipe(switchMap(params => this.bookService.getByIsbn(params.isbn)))
+        .pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])))
         .subscribe(book => (this.book = book))
     );
   }

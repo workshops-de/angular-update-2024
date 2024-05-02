@@ -1,0 +1,31 @@
+######## Intro
+Ivy Start
+Modules fallen weg 
+Standalone / Components 
+    (TASK) App in Standalone umbauen
+was Bedeutet das für den Router 
+    (TASK) Umbau auch mit Router
+Was heißt das alles nur noch funktional ist?
+    (TASK) Guard umbauen
+DI - schöne neue Welt dank Ivy und Co
+    (TASK) Neuen Guard abbauen mit inject nutzen
+
+######## TAG 2
+Signals - Ivy, DI, CD
+Signals VS Observables 
+    (TASK) Komponente auf Signals umbauen
+Fortführende Themen
+Typed Forms
+    (TASK) Form auf typed umbauen. 
+        Edit Ansicht auf Reactive Forms
+        Reset Knopf impl.
+        
+######## TAG 3
+Defer
+    (TASK) Auf trigger nachladen
+SSR
+    (TASK) Config einbauen, was bedeutet das? Analyse
+Performance
+Hydration
+    (TASK) Config einbauen, was bedeutet das? Analyse
+Zone-less Angular
