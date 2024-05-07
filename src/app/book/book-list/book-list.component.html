@@ -5,6 +5,10 @@
         Showing {{ $count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
       </small>
     }
-    <ws-book-card [book]="book"></ws-book-card>
+    @defer (on viewport()) {
+      <ws-book-card [book]="book"></ws-book-card>
+    } @placeholder {
+      <label>...loading</label>
+    }
   }
 </div>
