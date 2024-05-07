@@ -1,36 +1,57 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Component, Input, inject } from '@angular/core';
+import { map, tap } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { Book, BookNa } from '../models';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, NonNullableFormBuilder, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'ws-book-edit',
-    templateUrl: './book-edit.component.html',
-    standalone: true,
-    imports: [FormsModule]
+  selector: 'ws-book-edit',
+  templateUrl: './book-edit.component.html',
+  standalone: true,
+  imports: [ReactiveFormsModule]
 })
-export class BookEditComponent implements OnInit, OnDestroy {
-  sink = new Subscription();
-  book: Book = new BookNa();
+export class BookEditComponent {
+  private formBuilder = inject(NonNullableFormBuilder);
+  private bookService = inject(BookApiService);
+  private book!: Book;
 
-  constructor(private route: ActivatedRoute, private bookService: BookApiService) {}
+  form!: FormGroup<{
+    isbn: FormControl<string>;
+    title: FormControl<string>;
+    author: FormControl<string>;
+    abstract: FormControl<string>;
+    cover: FormControl<string>;
+  }>;
 
-  ngOnInit() {
-    this.sink.add(
-      this.route.params
-        .pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])))
-        .subscribe(book => (this.book = book))
-    );
-  }
-
-  ngOnDestroy() {
-    this.sink.unsubscribe();
+  @Input() set isbn(value: string) {
+    this.bookService
+      .getByIsbn(value)
+      .pipe(
+        tap(book => (this.book = book)),
+        map(book =>
+          this.formBuilder.group({
+            isbn: [book.isbn, [Validators.required, Validators.minLength(3)]],
+            title: [book.title, Validators.required],
+            author: [book.author, Validators.required],
+            abstract: [book.abstract],
+            cover: [book.cover]
+          })
+        )
+      )
+      .subscribe({
+        next: bookForm => (this.form = bookForm)
+      });
   }
 
   save() {
-    this.sink.add(this.bookService.update(this.book.isbn, this.book).subscribe());
+    const book: Book = {
+      ...this.book,
+      ...this.form.getRawValue()
+    };
+    this.bookService.update(this.isbn, book).subscribe();
+  }
+
+  reset() {
+    this.form.reset();
   }
 }

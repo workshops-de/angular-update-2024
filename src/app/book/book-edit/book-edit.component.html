@@ -1,11 +1,31 @@
 <h2 class="mat-h2">Edit</h2>
-<form #form="ngForm" class="book-edit-screen" (ngSubmit)="save()">
-  <label for="title">Title</label
-  ><input required minlength="1" [(ngModel)]="book.title" type="text" id="title" name="title" />
-  <label for="subtitle">Subtitle</label
-  ><input required [(ngModel)]="book.subtitle" type="text" id="subtitle" name="subtitle" />
-  <label for="abstract">Abstract</label
-  ><textarea [(ngModel)]="book.abstract" required type="text" id="abstract" name="abstract" rows="15"></textarea>
+@if (form) {
+  <form [formGroup]="form" class="book-edit-screen" (ngSubmit)="save()">
+    <label for="isbn">ISBN</label>
+    <input type="text" id="isbn" formControlName="isbn" />
+    @if (form.get('isbn')?.hasError('required') && form.get('isbn')?.dirty) {
+      <div>ISBN is required</div>
+    }
+    @if (form.get('isbn')?.hasError('minlength')) {
+      <div>ISBN has to be at least 3 characters long.</div>
+    }
 
-  <button [disabled]="!form.valid" type="submit" class="m-top"><span>💾</span>Save</button>
-</form>
+    <label for="title">Title</label>
+    <input type="text" id="title" formControlName="title" />
+    @if (form.get('title')?.hasError('required') && form.get('title')?.dirty) {
+      <div>Enter a title</div>
+    }
+
+    <label for="author">Author</label>
+    <input type="text" id="author" formControlName="author" />
+    @if (form.get('author')?.hasError('required') && form.get('author')?.dirty) {
+      <div>Enter a Author</div>
+    }
+
+    <label for="abstract">Abstract</label>
+    <textarea formControlName="abstract" type="text" id="abstract" name="abstract" rows="15"></textarea>
+
+    <label for="cover">Cover</label>
+    <input type="text" id="cover" formControlName="cover" />
+  </form>
+}

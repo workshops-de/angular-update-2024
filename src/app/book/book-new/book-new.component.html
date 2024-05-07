@@ -1,16 +1,24 @@
 <form class="book-new-screen" [formGroup]="form" (ngSubmit)="create()">
   <label for="isbn">ISBN</label>
   <input type="text" id="isbn" formControlName="isbn" />
-  <div *ngIf="form.get('isbn')?.hasError('required') && form.get('isbn')?.dirty">ISBN is required</div>
-  <div *ngIf="form.get('isbn')?.hasError('minlength')">ISBN has to be at least 3 characters long.</div>
+  @if (form.get('isbn')?.hasError('required') && form.get('isbn')?.dirty) {
+    <div>ISBN is required</div>
+  }
+  @if (form.get('isbn')?.hasError('minlength')) {
+    <div>ISBN has to be at least 3 characters long.</div>
+  }
 
   <label for="title">Title</label>
   <input type="text" id="title" formControlName="title" />
-  <div *ngIf="form.get('title')?.hasError('required') && form.get('title')?.dirty">Enter a title</div>
+  @if (form.get('title')?.hasError('required') && form.get('title')?.dirty) {
+    <div>Enter a title</div>
+  }
 
   <label for="author">Author</label>
   <input type="text" id="author" formControlName="author" />
-  <div *ngIf="form.get('author')?.hasError('required') && form.get('author')?.dirty">Enter a Author</div>
+  @if (form.get('author')?.hasError('required') && form.get('author')?.dirty) {
+    <div>Enter a Author</div>
+  }
 
   <label for="abstract">Abstract</label>
   <textarea formControlName="abstract" type="text" id="abstract" name="abstract" rows="15"></textarea>
