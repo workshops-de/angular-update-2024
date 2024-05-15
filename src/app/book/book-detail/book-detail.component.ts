@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 import { exhaustMap, switchMap, tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
@@ -12,22 +13,25 @@ import { AsyncPipe } from '@angular/common';
   standalone: true,
   imports: [RouterLink, AsyncPipe]
 })
-export class BookDetailComponent {
-  public book$: Observable<Book>;
+export class BookDetailComponent implements OnInit {
+  @Input() isbn = '';
+  public book$: Observable<Book> = NEVER;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private bookService: BookApiService
-  ) {
-    this.book$ = this.route.params.pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])));
+    private bookService: BookApiService,
+    private destroyRef: DestroyRef
+  ) {}
+  ngOnInit(): void {
+    this.book$ = this.bookService.getByIsbn(this.isbn);
   }
 
   remove() {
-    this.route.params
+    this.bookService
+      .delete(this.isbn)
       .pipe(
-        exhaustMap(params => this.bookService.delete(params['isbn'])),
-        tap(() => this.router.navigateByUrl('/'))
+        tap(() => this.router.navigateByUrl('/')),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }

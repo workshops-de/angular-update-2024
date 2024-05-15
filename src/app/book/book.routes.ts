@@ -7,7 +7,7 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookNewComponent } from './book-new/book-new.component';
 import { LeaveGuard } from './leave.guard';
 
-export const routes: Routes = [
+export const bookRoutes: Routes = [
   {
     path: '',
     component: BookComponent,
@@ -32,9 +32,3 @@ export const routes: Routes = [
     ]
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class BookRoutingModule {}
