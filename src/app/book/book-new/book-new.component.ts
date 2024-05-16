@@ -1,7 +1,18 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidatorFn,
+  AbstractControl,
+  FormControl,
+  ValidationErrors,
+  AsyncValidatorFn
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
@@ -43,10 +54,18 @@ export class BookNewComponent implements OnDestroy {
   private buildForm(): FormGroup {
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
-      title: ['', Validators.required],
+      title: ['', Validators.required, [nameValidater()]],
       author: ['', Validators.required],
       abstract: [''],
       cover: ['']
     });
   }
 }
+
+const nameValidater = (): AsyncValidatorFn => {
+  const service = inject(BookApiService);
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    service.getAll();
+    return (control.value as string).includes('Kevin') ? of(null) : of({ name: 'muss Kevin enthalten' });
+  };
+};
