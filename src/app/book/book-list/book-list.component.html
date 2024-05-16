@@ -1,5 +1,5 @@
 <div class="book-list">
-  @for (book of books$ | async; track book.isbn) {
+  @for (book of books(); track book.isbn) {
     @if ($first) {
       <small class="text-meta">
         Showing {{ $count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
