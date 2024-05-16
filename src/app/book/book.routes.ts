@@ -5,6 +5,9 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookNewComponent } from './book-new/book-new.component';
 import { leaveGuard } from './leave.guard';
+import { BookApiService } from './book-api.service';
+import { inject } from '@angular/core';
+import { authGuard } from './auth.guard';
 
 const bookRoutes: Routes = [
   {
@@ -24,7 +27,8 @@ const bookRoutes: Routes = [
       },
       {
         path: ':isbn',
-        component: BookDetailComponent
+        component: BookDetailComponent,
+        canActivate: [authGuard]
       },
       {
         path: ':isbn/edit',
