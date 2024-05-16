@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
@@ -13,9 +13,5 @@ import { AsyncPipe } from '@angular/common';
   imports: [RouterLink, BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
-  books$: Observable<Book[]>;
-
-  constructor(private bookData: BookApiService) {
-    this.books$ = this.bookData.getAll();
-  }
+  books$: Observable<Book[]> = inject(BookApiService).getAll();
 }

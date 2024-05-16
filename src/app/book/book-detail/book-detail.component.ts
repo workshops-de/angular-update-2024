@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NEVER, Observable } from 'rxjs';
@@ -17,11 +17,9 @@ export class BookDetailComponent implements OnInit {
   @Input() isbn = '';
   public book$: Observable<Book> = NEVER;
 
-  constructor(
-    private router: Router,
-    private bookService: BookApiService,
-    private destroyRef: DestroyRef
-  ) {}
+  private router = inject(Router);
+  private bookService = inject(BookApiService);
+  private destroyRef = inject(DestroyRef);
   ngOnInit(): void {
     this.book$ = this.bookService.getByIsbn(this.isbn);
   }

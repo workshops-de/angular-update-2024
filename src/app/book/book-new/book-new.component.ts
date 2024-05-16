@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,12 +16,11 @@ export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
   form: FormGroup;
   saved = false;
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private bookService = inject(BookApiService);
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private bookService: BookApiService
-  ) {
+  constructor() {
     this.form = this.buildForm();
   }
 
