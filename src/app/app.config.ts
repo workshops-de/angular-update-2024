@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserModule, HammerModule, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -8,9 +8,8 @@ import { appRoutes } from './app.routes';
 export const appConfig = {
   providers: [
     importProvidersFrom(BrowserModule, HammerModule),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideAnimations(),
-    provideRouter(appRoutes, withComponentInputBinding()),
-    provideClientHydration()
+    provideRouter(appRoutes, withComponentInputBinding())
   ]
 };
