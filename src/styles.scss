@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
 :root {
   /* h1, button bg */
@@ -70,7 +70,9 @@ body {
   width: 100%;
   min-height: 100vh;
 
-  font: 400 var(--font-base) / 1.5rem 'Merriweather', sans-serif;
+  font:
+    400 var(--font-base) / 1.5rem 'Merriweather',
+    sans-serif;
 
   color: var(--c-text-primary);
 }
