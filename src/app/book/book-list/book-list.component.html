@@ -1,8 +1,10 @@
 <div class="book-list">
-  @for (book of books(); track book.isbn) {
+  <app-filter [(searchString)]="sString" />
+  @for (book of s_books() | bookFilter: sString; track book.isbn) {
     @if ($first) {
       <small class="text-meta">
-        Showing {{ $count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
+        Showing {{ $count }}/{{ s_bookCount() }} books.
+        <button routerLink="new" class="m-top"><span>➕</span>New</button>
       </small>
     }
     <ws-book-card [book]="book"></ws-book-card>
