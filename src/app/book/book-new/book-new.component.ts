@@ -2,6 +2,7 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  NonNullableFormBuilder,
   Validators,
   FormsModule,
   ReactiveFormsModule,
@@ -15,8 +16,32 @@ import { Router } from '@angular/router';
 import { Observable, Subscription, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
-import { BookNa } from '../models';
+import { Book, BookNa } from '../models';
 
+// export type IForm<T> = {
+//   [K in keyof T]: FormControl<T[K]>;
+//   }
+
+//   const f: IForm<Book> = new FormGroup({
+//     id: new FormControl<string>(""),
+//   title: new FormControl<string>(""),
+//   subtitle: new FormControl<string>(""),
+//   isbn: new FormControl<string>(""),
+//   cover: new FormControl<string>(""),
+//   abstract: new FormControl<string>(""),
+//   numPages: new FormControl<number>(0),
+//   author: new FormControl<string>(""),
+//   publisher: new FormControl<string>(""),
+//   price: new FormControl<number>(0)
+//   })
+
+export interface IBookForm {
+  isbn: FormControl<string>;
+  title: FormControl<string>;
+  author: FormControl<string>;
+  abstract: FormControl<string>;
+  cover: FormControl<string>;
+}
 @Component({
   selector: 'ws-book-new',
   templateUrl: './book-new.component.html',
@@ -25,10 +50,10 @@ import { BookNa } from '../models';
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
-  form: FormGroup;
+  form: FormGroup<IBookForm> = this.buildForm();
   saved = false;
   private router = inject(Router);
-  private fb = inject(FormBuilder);
+  private fb = inject(NonNullableFormBuilder);
   private bookService = inject(BookApiService);
 
   constructor() {
@@ -51,7 +76,7 @@ export class BookNewComponent implements OnDestroy {
     );
   }
 
-  private buildForm(): FormGroup {
+  private buildForm() {
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', Validators.required, [nameValidater()]],

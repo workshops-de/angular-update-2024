@@ -1,33 +1,56 @@
-import { Component, DestroyRef, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnDestroy, OnInit, effect, inject, input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book, BookNa } from '../models';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+export interface IBookForm {
+  title: FormControl<string>;
+  subtitle: FormControl<string>;
+  abstract: FormControl<string>;
+}
 @Component({
   selector: 'ws-book-edit',
   templateUrl: './book-edit.component.html',
   standalone: true,
-  imports: [FormsModule]
+  imports: [ReactiveFormsModule]
 })
-export class BookEditComponent implements OnInit {
-  @Input() isbn = '';
+export class BookEditComponent {
+  isbn = input.required<string>();
   book: Book = new BookNa();
+  form!: FormGroup<IBookForm>;
+  eRef = effect(() => {
+    this.bookService
+      .getByIsbn(this.isbn())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(book => {
+        this.book = book;
+        this.form = this.fb.group({
+          title: [book.title, Validators.required],
+          subtitle: [book.author, Validators.required],
+          abstract: [book.abstract]
+        });
+      });
+  });
 
   private bookService = inject(BookApiService);
   private destroyRef = inject(DestroyRef);
-
-  ngOnInit() {
-    this.bookService
-      .getByIsbn(this.isbn)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(book => (this.book = book));
-  }
+  private fb = inject(NonNullableFormBuilder);
 
   save() {
-    this.bookService.update(this.book.isbn, this.book).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    this.bookService
+      .update(this.book.isbn, { ...this.book, ...this.form.value })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }
