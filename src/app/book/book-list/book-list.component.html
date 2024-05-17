@@ -1,12 +1,20 @@
 <div class="book-list">
-  <app-filter [(searchString)]="sString" />
-  @for (book of s_books() | bookFilter: sString; track book.isbn) {
-    @if ($first) {
-      <small class="text-meta">
-        Showing {{ $count }}/{{ s_bookCount() }} books.
-        <button routerLink="new" class="m-top"><span>➕</span>New</button>
-      </small>
+  <button #loadBooks>los gehts</button>
+  @defer (on interaction(loadBooks)) {
+    <app-filter [(searchString)]="sString" />
+    @for (book of s_books() | bookFilter: sString; track book.isbn) {
+      @if ($first) {
+        <small class="text-meta">
+          Showing {{ $count }}/{{ s_bookCount() }} books.
+          <button routerLink="new" class="m-top"><span>➕</span>New</button>
+        </small>
+      }
+
+      @defer (on viewport()) {
+        <ws-book-card [book]="book"></ws-book-card>
+      } @placeholder {
+        <div style="height: 200px">loading .....</div>
+      }
     }
-    <ws-book-card [book]="book"></ws-book-card>
   }
 </div>
