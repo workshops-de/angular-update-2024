@@ -6,7 +6,7 @@ import { BookNewComponent } from './book-new/book-new.component';
 import { LeaveGuard } from './leave.guard';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 
-export const bookRoutes: Routes = [
+const bookRoutes: Routes = [
   {
     path: '',
     component: BookComponent,
@@ -31,3 +31,5 @@ export const bookRoutes: Routes = [
     ]
   }
 ];
+
+export default bookRoutes
