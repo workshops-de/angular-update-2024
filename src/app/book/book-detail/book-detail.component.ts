@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 import { exhaustMap, switchMap, tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'ws-book-detail',
-    templateUrl: 'book-detail.component.html',
-    standalone: true,
-    imports: [NgIf, RouterLink, AsyncPipe]
+  selector: 'ws-book-detail',
+  templateUrl: 'book-detail.component.html',
+  standalone: true,
+  imports: [RouterLink, AsyncPipe]
 })
 export class BookDetailComponent {
   public book$: Observable<Book>;

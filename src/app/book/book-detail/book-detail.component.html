@@ -1,4 +1,5 @@
-<div class="book-detail-screen" *ngIf="book$ | async as book">
+@if(book$ | async; as book){
+<div class="book-detail-screen">
   <a href="/books"><span>⬅️ </span>Back to books</a><img [src]="book.cover" [alt]="book.title" />
   <h2>{{ book.title }}</h2>
   <h3>{{ book.subtitle }}</h3>
@@ -12,3 +13,4 @@
     <button><span>✏️</span>Edit</button>
   </a>
 </div>
+}
