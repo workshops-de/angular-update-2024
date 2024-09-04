@@ -3,7 +3,7 @@ import { BookComponent } from './book.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookNewComponent } from './book-new/book-new.component';
-import { LeaveGuard } from './leave.guard';
+import { leaveGuard } from './leave.guard';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 
 const bookRoutes: Routes = [
@@ -18,7 +18,7 @@ const bookRoutes: Routes = [
       {
         path: 'new',
         component: BookNewComponent,
-        canDeactivate: [LeaveGuard]
+        canDeactivate: [leaveGuard]
       },  
       {
         path: ':isbn',
