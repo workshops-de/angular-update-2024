@@ -3,10 +3,10 @@ import { Book, BookNa } from '../models';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'ws-book-card',
-    templateUrl: './book-card.component.html',
-    standalone: true,
-    imports: [RouterLink]
+  selector: 'ws-book-card',
+  templateUrl: './book-card.component.html',
+  standalone: true,
+  imports: [RouterLink]
 })
 export class BookCardComponent {
   @Input() book: Book = new BookNa();

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -7,16 +7,17 @@ import { Book, BookNa } from '../models';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'ws-book-edit',
-    templateUrl: './book-edit.component.html',
-    standalone: true,
-    imports: [FormsModule]
+  selector: 'ws-book-edit',
+  templateUrl: './book-edit.component.html',
+  standalone: true,
+  imports: [FormsModule]
 })
 export class BookEditComponent implements OnInit, OnDestroy {
   sink = new Subscription();
   book: Book = new BookNa();
 
-  constructor(private route: ActivatedRoute, private bookService: BookApiService) {}
+  private route = inject(ActivatedRoute);
+  private bookService = inject(BookApiService);
 
   ngOnInit() {
     this.sink.add(

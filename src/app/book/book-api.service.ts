@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from './models';
 
@@ -7,7 +7,7 @@ import { Book } from './models';
 export class BookApiService {
   private endpoint = 'http://localhost:4730/books';
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient)
 
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.endpoint}`);

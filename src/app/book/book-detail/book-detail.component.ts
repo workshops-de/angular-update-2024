@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { exhaustMap, switchMap, tap } from 'rxjs/operators';
@@ -14,8 +14,11 @@ import { AsyncPipe } from '@angular/common';
 })
 export class BookDetailComponent {
   public book$: Observable<Book>;
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private bookService = inject(BookApiService);
 
-  constructor(private router: Router, private route: ActivatedRoute, private bookService: BookApiService) {
+  constructor() {
     this.book$ = this.route.params.pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])));
   }
 
