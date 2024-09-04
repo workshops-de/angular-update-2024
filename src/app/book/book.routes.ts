@@ -5,6 +5,7 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookNewComponent } from './book-new/book-new.component';
 import { leaveGuard } from './leave.guard';
 import { BookDetailComponent } from './book-detail/book-detail.component';
+import { authGuard } from './auth.guard';
 
 const bookRoutes: Routes = [
   {
@@ -19,11 +20,12 @@ const bookRoutes: Routes = [
         path: 'new',
         component: BookNewComponent,
         canDeactivate: [leaveGuard]
-      },  
+      },
       {
         path: ':isbn',
-        component: BookDetailComponent
-      },    
+        component: BookDetailComponent,
+        canActivate: [authGuard]
+      },
       {
         path: ':isbn/edit',
         component: BookEditComponent
@@ -32,4 +34,4 @@ const bookRoutes: Routes = [
   }
 ];
 
-export default bookRoutes
+export default bookRoutes;
