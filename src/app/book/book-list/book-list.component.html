@@ -1,8 +1,9 @@
 <div class="book-list">
-  @for(book of books$ | async; track book.isbn){
+  <input type="text" id="search" #search (input)="setSearchTerm(search.value)" />
+  @for(book of books() |filter: searchTerm; track book.isbn){
   @if($first){
   <small class="text-meta">
-    Showing {{ $count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
+    Showing {{ $count }}/{{totalNumber()}} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
   </small>
   }
   <ws-book-card [book]="book"></ws-book-card>

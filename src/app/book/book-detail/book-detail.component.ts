@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { exhaustMap, switchMap, tap } from 'rxjs/operators';
@@ -17,6 +17,8 @@ export class BookDetailComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private bookService = inject(BookApiService);
+
+  foo$$$ = signal('foo');
 
   constructor() {
     this.book$ = this.route.params.pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])));
