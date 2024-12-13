@@ -4,8 +4,9 @@ import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 
 @Component({
-  selector: 'ws-book-list',
-  templateUrl: 'book-list.component.html'
+    selector: 'ws-book-list',
+    templateUrl: 'book-list.component.html',
+    standalone: false
 })
 export class BookListComponent {
   books$: Observable<Book[]>;
