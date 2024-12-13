@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
@@ -10,15 +10,15 @@ import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [AppComponent, AboutComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     HammerModule,
     CommonComponentsModule,
     AppRoutingModule
   ],
-  bootstrap: [AppComponent]
+  providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule {}
