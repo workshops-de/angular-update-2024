@@ -5,21 +5,20 @@ import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonComponentsModule } from './common-components/common-components.module';
+
 import { AboutComponent } from './about/about.component';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        HammerModule,
-        CommonComponentsModule,
-        AppRoutingModule,
-        AboutComponent
-    ],
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    HammerModule,
+    AppRoutingModule,
+    AboutComponent
+],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
