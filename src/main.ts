@@ -8,16 +8,10 @@ import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http'
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
 if (environment.production) {
   enableProdMode();
 }
 
-bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, FormsModule, HammerModule, AppRoutingModule),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
-    ]
-})
-  .catch(err => console.log(err));
+bootstrapApplication(AppComponent, appConfig).catch(err => console.log(err));
