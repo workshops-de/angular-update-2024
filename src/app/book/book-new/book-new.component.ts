@@ -7,8 +7,9 @@ import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
 
 @Component({
-  selector: 'ws-book-new',
-  templateUrl: './book-new.component.html'
+    selector: 'ws-book-new',
+    templateUrl: './book-new.component.html',
+    standalone: false
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
