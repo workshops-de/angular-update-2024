@@ -9,7 +9,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({ selector: 'ws-book-detail', templateUrl: 'book-detail.component.html', imports: [RouterLink, AsyncPipe] })
 export class BookDetailComponent implements OnInit {
   public book$: Observable<Book> = NEVER;
-  @Input() isbn: string = '';
+  @Input({ required: true }) isbn!: string;
 
   constructor(
     private router: Router,
