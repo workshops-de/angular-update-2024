@@ -1,29 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 import { exhaustMap, switchMap, tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { AsyncPipe } from '@angular/common';
 
-@Component({
-    selector: 'ws-book-detail',
-    templateUrl: 'book-detail.component.html',
-    imports: [RouterLink, AsyncPipe]
-})
-export class BookDetailComponent {
-  public book$: Observable<Book>;
+@Component({ selector: 'ws-book-detail', templateUrl: 'book-detail.component.html', imports: [RouterLink, AsyncPipe] })
+export class BookDetailComponent implements OnInit {
+  public book$: Observable<Book> = NEVER;
+  @Input() isbn: string = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private bookService: BookApiService) {
-    this.book$ = this.route.params.pipe(switchMap(params => this.bookService.getByIsbn(params['isbn'])));
+  constructor(
+    private router: Router,
+    private bookService: BookApiService
+  ) {}
+  ngOnInit(): void {
+    this.book$ = this.bookService.getByIsbn(this.isbn);
   }
 
   remove() {
-    this.route.params
-      .pipe(
-        exhaustMap(params => this.bookService.delete(params['isbn'])),
-        tap(() => this.router.navigateByUrl('/'))
-      )
+    this.bookService
+      .delete(this.isbn)
+      .pipe(tap(() => this.router.navigateByUrl('/')))
       .subscribe();
   }
 }
