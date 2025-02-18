@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book, BookNa } from '../models';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'ws-book-edit',
     templateUrl: './book-edit.component.html',
-    standalone: false
+    imports: [FormsModule]
 })
 export class BookEditComponent implements OnInit, OnDestroy {
   sink = new Subscription();

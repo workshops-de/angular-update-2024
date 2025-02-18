@@ -1,15 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'ws-book-new',
     templateUrl: './book-new.component.html',
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NgIf]
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();

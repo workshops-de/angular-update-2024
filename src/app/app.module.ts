@@ -9,16 +9,17 @@ import { CommonComponentsModule } from './common-components/common-components.mo
 import { AboutComponent } from './about/about.component';
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    HammerModule,
-    CommonComponentsModule,
-    AppRoutingModule
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        HammerModule,
+        CommonComponentsModule,
+        AppRoutingModule,
+        AboutComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

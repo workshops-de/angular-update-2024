@@ -11,14 +11,11 @@ import { BookComponent } from './book.component';
 import { BookCardComponent } from './book-card/book-card.component';
 
 @NgModule({
-  imports: [BookRoutingModule, HttpClientModule, FormsModule, CommonModule, ReactiveFormsModule],
-  declarations: [
-    BookComponent,
-    BookListComponent,
-    BookDetailComponent,
-    BookEditComponent,
-    BookNewComponent,
-    BookCardComponent
-  ]
+    imports: [BookRoutingModule, HttpClientModule, FormsModule, CommonModule, ReactiveFormsModule, BookComponent,
+        BookListComponent,
+        BookDetailComponent,
+        BookEditComponent,
+        BookNewComponent,
+        BookCardComponent]
 })
 export class BookModule {}
