@@ -5,12 +5,12 @@ import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'ws-book-new',
     templateUrl: './book-new.component.html',
-    imports: [FormsModule, ReactiveFormsModule, NgIf]
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
