@@ -1,8 +1,8 @@
 <div class="book-list">
-  @for (book of books$ | async; track $index) {
+  @for (book of books(); track $index) {
     @if ($first) {
       <small class="text-meta">
-        Showing {{ $count }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
+        Showing {{ count() }} books. <button routerLink="new" class="m-top"><span>➕</span>New</button>
       </small>
     }
     <ws-book-card [book]="book"></ws-book-card>
