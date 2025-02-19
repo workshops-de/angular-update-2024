@@ -1,4 +1,5 @@
 @if (book$ | async; as book) {
+  <!-- @if (book(); as mybook) { -->
   <div class="book-detail-screen">
     <a href="/books"><span>⬅️ </span>Back to books</a><img [src]="book.cover" [alt]="book.title" />
     <h2>{{ book.title }}</h2>
