@@ -8,7 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({ selector: 'ws-book-detail', templateUrl: 'book-detail.component.html', imports: [RouterLink, AsyncPipe] })
-export class BookDetailComponent implements OnInit, OnChanges {
+export class BookDetailComponent implements OnChanges {
   private router = inject(Router);
   private bookService = inject(BookApiService);
 
