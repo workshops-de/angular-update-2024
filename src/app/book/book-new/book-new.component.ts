@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,18 +6,21 @@ import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
 
-
 @Component({
-    selector: 'ws-book-new',
-    templateUrl: './book-new.component.html',
-    imports: [FormsModule, ReactiveFormsModule]
+  selector: 'ws-book-new',
+  templateUrl: './book-new.component.html',
+  imports: [FormsModule, ReactiveFormsModule]
 })
 export class BookNewComponent implements OnDestroy {
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private bookService = inject(BookApiService);
+
   sink = new Subscription();
   form: FormGroup;
   saved = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private bookService: BookApiService) {
+  constructor() {
     this.form = this.buildForm();
   }
 
@@ -31,9 +34,7 @@ export class BookNewComponent implements OnDestroy {
       this.bookService
         .create(book)
         .pipe(tap(() => (this.saved = true)))
-        .subscribe({
-          complete: () => this.router.navigateByUrl('/')
-        })
+        .subscribe({ complete: () => this.router.navigateByUrl('/') })
     );
   }
 
