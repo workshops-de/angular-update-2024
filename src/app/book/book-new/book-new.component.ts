@@ -1,7 +1,14 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+  NonNullableFormBuilder
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { BookNa } from '../models';
@@ -13,7 +20,7 @@ import { BookNa } from '../models';
 })
 export class BookNewComponent implements OnDestroy {
   private router = inject(Router);
-  private fb = inject(FormBuilder);
+  private fb = inject(NonNullableFormBuilder);
   private bookService = inject(BookApiService);
 
   sink = new Subscription();
@@ -28,6 +35,10 @@ export class BookNewComponent implements OnDestroy {
     this.sink.unsubscribe();
   }
 
+  reset() {
+    this.form.reset();
+  }
+
   create() {
     const book = { ...new BookNa(), ...this.form.value };
     this.sink.add(
@@ -38,10 +49,10 @@ export class BookNewComponent implements OnDestroy {
     );
   }
 
-  private buildForm(): FormGroup {
+  private buildForm() {
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
-      title: ['', Validators.required],
+      title: ['Hallo', Validators.required],
       author: ['', Validators.required],
       abstract: [''],
       cover: ['']
